@@ -1,5 +1,3 @@
-refinerycms-videos
-==================
 # Refinery CMS Video.js
 
 Менеджер видео файлов для [Refinery CMS](http://refinerycms.com)
