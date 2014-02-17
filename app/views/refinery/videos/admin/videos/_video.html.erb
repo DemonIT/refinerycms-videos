@@ -1,0 +1,34 @@
+<li class='clearfix record <%= cycle('on', 'on-hover') %>' id="<%= dom_id(video) -%>">
+  <span class='title video_<%= video.get_file_ext %>'>
+    <%= video.get_title %>
+    <span class="preview">- <%= number_to_human_size(video.file_size) %></span>
+  </span>
+  <% if action_name == 'insert' %>
+            <span class="actions" id="video_action<%= video.id %>">
+                <%= link_to refinery_icon_tag('icon-arrow-right-blue.png'),
+                            refinery.videos_admin_video_to_html_path(video_id: video.id, tab_name: 'insert_preview'),
+                            :title => t('select', scope: 'refinery.videos.admin.videos.insert'),
+                            :remote => true %>
+            </span>
+            <span class="actions" id="video_select<%= video.id %>" style="display: none;">
+              <%= refinery_icon_tag('select_video.png') %>
+            </span>
+  <% else %>
+      <span class='actions'>
+            <%= link_to refinery_icon_tag('page_white_put.png'),
+                        refinery.videos_admin_video_download_path(video),
+                        :title => t('.download', :size => number_to_human_size(video.file_size)) %>
+        <%= link_to refinery_icon_tag('add_video_icon.png'),
+                    refinery.edit_videos_admin_video_path(video),
+                    :title => t('.edit') %>
+        <%= link_to refinery_icon_tag('delete.png'),
+                    refinery.videos_admin_video_path(video),
+                    :class => "cancel confirm-delete",
+                    :title => t('.delete'),
+                    :data => {
+                            :confirm => t('.message', :file_name => video.get_title)
+                    },
+                    :method => :delete %>
+      </span>
+  <% end %>
+</li>

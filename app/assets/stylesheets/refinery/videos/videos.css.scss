@@ -1,0 +1,104 @@
+/*
+  Place all the styles related to the matching controller here.
+  They will automatically be included in application.css.
+*/
+
+$video_ogg_image: url("/assets/refinery/admin/Audio_OGG.png");
+$video_webm_image: url("/assets/refinery/admin/webm.gif");
+$video_mp4_image: url("/assets/refinery/admin/video-mp4.png");
+
+.video_mp4, .video_ogg, .video_webm, .video_ogv{
+    background: {position: left; size: auto 20px; repeat: no-repeat }
+    padding-left: 30px !important;
+}
+.video_mp4{background-image: $video_mp4_image !important;}
+.video_ogg, .video_ogv{background-image: $video_ogg_image !important;}
+.video_webm{background-image: $video_webm_image !important;}
+
+.edit_video{
+  .video_preview{
+    float: right;width: 50%;height: 300px;
+    video{width: 100%;}
+  }
+  .video-js{width: 100% !important;height: 100% !important;}
+  .video_form{
+    float: left;width: 48%;
+    input{width: 95%;}
+  }
+  .form-actions{float: right;}
+}
+li.wym_tools_video{
+  a{background-image: url("film_plus.png");padding-left: 24px !important;}
+}
+
+.insert_video{ height: inherit;
+  .insert_video_form{
+    float: left;width: 55%;
+    .search_form{
+//      .button{position: relative;margin-left: 15px;}
+      .button{top: 2px;}
+      #search{width: 80%;}
+      float: none !important;
+      form{margin-bottom: 0;}
+      margin-bottom: 15px !important;
+    }
+    #records{
+      float: none;
+      width: 100%;
+    }
+  }
+  .insert_video_preview{
+    float: right;width: 42%;
+    min-height: 480px;
+    height: 100%;
+    padding-left: 10px;
+    border-left: 1px solid gray;
+    #video_name{text-align: center;font-weight: bold;width: 100%;min-height: 20px;}
+    #show_video{
+      min-height: 250px;
+      .video-js{width: 100% !important;height: 100% !important;min-height: 250px;position: relative;}
+      video{ width: 100%;height:245px;border: 1px solid transparent;background-color: transparent;}
+    }
+    .insert_params{
+      label{font-weight: normal;margin-top: 0;}
+      .field{
+        float: left;padding-right: 15px;
+        margin-top: 0 !important;
+      }
+    }
+  }
+  #videos_list_title, #params_title, #preview_title{
+    font-weight: bold;
+    border-bottom: 1px solid gray;
+    margin: 10px 0;
+    text-transform: uppercase;
+  }
+//  overflow-y: hidden;
+}
+.show_video{
+  border: 1px solid gray;
+  background-color: black;
+  position: relative;
+  #video_not_found{
+    width: 50%;
+    height: 50%;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+
+    border: 5px dashed gray;
+    color: brown;
+    font-weight: bold;
+    text-transform: uppercase;
+    div{
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      top: 40%;
+    }
+  }
+}
+
+.divAlert{
+  border: 1px solid red;padding: 3px;font-weight: bold;
+}

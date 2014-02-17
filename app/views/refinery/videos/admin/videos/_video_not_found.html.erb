@@ -1,0 +1,7 @@
+<div id="video_not_found">
+  <% if action_name.to_s == 'insert' %>
+    <div><%= t 'video_not_selected', scope: 'refinery.videos.admin.videos.video_to_html' %></div>
+  <% else %>
+    <div><%= t 'video_not_found', scope: 'refinery.videos.admin.videos.video_to_html' %></div>
+  <% end %>
+</div>

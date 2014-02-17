@@ -1,0 +1,29 @@
+<% if @tab_name == 'insert_preview' %>
+    $('#show_video').html('<%=j render 'show_video', video: @video, include_javascript: true %>') ;
+    $('#video_id').val(<%= @video.id %>)
+    $('#video_name').text('<%= @video.get_title %>')
+    $("span[id^='video_select']").hide();
+    $("span[id^='video_action']").show();
+    $('#video_action<%= @video.id %>').hide();
+    $('#video_select<%= @video.id %>').show();
+<% elsif @tab_name == 'append_to_wym' %>
+    wym = parent.$.wymeditors(0);
+//    wym.insert('<%#=j render 'show_video', :video => @video, :video_width => @video_width, :video_height => @video_height %>');
+    wym.html(wym.html() + '<%=j render 'show_video', :video => @video, :video_width => @video_width, :video_height => @video_height %>');
+    wym.update();
+    close_dialog();
+<% else %>
+    alert('<%= t 'page_not_found', scope: 'refinery.videos.admin.videos.video_to_html' %>');
+<% end %>
+
+
+
+
+//  delete
+//    if(0 > 2) {
+//        $(document).ready(function(){
+//            $('#divInsertVideo').bind('click', function(){
+//
+//            })
+//        })
+//    }

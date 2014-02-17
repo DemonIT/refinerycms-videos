@@ -1,0 +1,15 @@
+<% # default configure
+   video ||= nil
+   video_width ||= 0
+   video_height ||= 0
+   include_javascript ||= false
+%>
+<!--video tag began-->
+<% if video %>
+  <%= javascript_include_tag 'video', 'videojs_loader' if include_javascript  %>
+  <video id="show_video_<%= video.id %>" class="video-js vjs-default-skin" controls="controls" preload="true"
+         <%= "width=#{video_width}" if video_width > 0 %> <%= "height=#{video_height}" if video_height > 0 %> data-setup="{}" >
+    <source src="<%= video.download_url %>" type='<%= video.file_mime_type %>' />
+  </video>
+<% end %>
+<!--video tag ended-->

@@ -1,0 +1,67 @@
+<div class="insert_video">
+  <div class="insert_video_form">
+    <div id="videos_list_title"><%= t '.videos_list_title' %></div>
+    <div class="search_form">
+      <%= form_tag(refinery.videos_admin_videos_insert_path, :method => 'get') do |search_form| %>
+          <%= text_field :search, nil, :id => 'search', :type => 'search', :name => 'search', :value => params[:search], :title => t('search_input_notice', :scope => 'refinery.admin.search') %>
+          <%= hidden_field :dialog, nil, :name => 'dialog', :id => nil, :value => true if from_dialog? %>
+          <%= submit_tag t('button_text', :scope => 'refinery.admin.search'), :name => nil %>
+      <% end %>
+    </div>
+    <div>
+      <%= render 'insert_list_videos' %>
+    </div>
+
+
+
+  </div>
+  <div class="insert_video_preview">
+    <div id="preview_title">
+      <%= t '.preview_title' %>
+    </div>
+    <div id="video_name"></div>
+    <div id="show_video" class="show_video">
+      <%= render 'video_not_found' %>
+    </div>
+
+    <div class="insert_params">
+      <div id="params_title"><%= t '.params_title' %></div>
+      <%= form_tag(refinery.videos_admin_video_to_html_path, :remote => true, :id => 'insert_params_form', :as=> 'video') do |insert_params_form| %>
+          <%= hidden_field_tag :tab_name, 'append_to_wym' %>
+          <%= hidden_field_tag :video_id %>
+
+          <div class='field'>
+            <%= label_tag :width, t('label_width', scope: 'refinery.videos.admin.videos.video_to_html') %>
+            <%= text_field_tag :width, @default_width, :placeholder => t('default_width', scope: 'refinery.videos.admin.videos.video_to_html') %>
+          </div>
+          <div class='field'>
+            <%= label_tag :height, t('label_height', scope: 'refinery.videos.admin.videos.video_to_html') %>
+            <%= text_field_tag :height, @default_height, :placeholder => t('default_height', scope: 'refinery.videos.admin.videos.video_to_html') %>
+          </div>
+          <%= render '/refinery/admin/form_actions', :f => insert_params_form,
+                     :hide_cancel => false,
+                     :cancel_title => t('.cancel_dialog'),
+                     :submit_button_text => t('.append_to_wym') %>
+
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+<script>
+    $(document).ready(function(){
+        $('#search').focus();
+    }) ;
+
+    $('#insert_params_form').bind('submit', function(){
+        if(this.video_id.value){
+            return true;
+        } else {
+            alert('<%= t 'video_not_selected', scope: 'refinery.videos.admin.videos.video_to_html' %>');
+            $('.save-loader').hide();
+            return false;
+        }
+
+    })
+</script>

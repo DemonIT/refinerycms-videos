@@ -1,0 +1,73 @@
+ru:
+  refinery:
+    admin:
+      search:
+        cancel_search: "Сбросить фильтр"
+    plugins:
+      videos:
+        title: "Видео"
+    videos:
+      admin:
+        videos:
+          actions:
+            create_new: "Загрузить новый видео файл"
+            reorder: "Reorder Audios"
+            reorder_done: "Done Reordering Audios"
+          list_files:
+            no_items_yet: "Здесь пока нет видео файлов."
+          videos:
+            download: "Скачать файл (%{size})"
+            delete: "Удалить этот файл навсегда"
+            message: "Вы уверены, что хотите безвовратно удалить '%{file_name}'?"
+            edit: "Просмотр видео и редактирование свойств"
+          download:
+            search_of_null: "Видео файл не найден"
+          form:
+            file_tip: "Для полной совместимости, добавтье файлы следующих форматов: %{type_files}"
+            maximum_file_size: "Максимальный размер файла: %{bytes}"
+            add_file: "Загрузить видео файл"
+          upload:
+            successfully_finish: "Видео файл %{file_title} успешно загружен"
+          update:
+            successfully_finish: "Видео файл %{file_title} успешно обновлен"
+          destroy:
+            successfully_finish: "Видео файл %{file_title} удален"
+          edit:
+            update_data: "Сохранить изменения"
+            video_title: "Название видео"
+          errors:
+            translate_error_text: "Непредвиденная ошибка"
+            search_bd_of_null: "Видео отсутсвует в базе"
+            search_file_of_null: "Видео файл не найден"
+            file_type_uncorrect: "Неверный тип файла"
+            file_is_null: "Файл не выбран"
+            file_big_size: "Выбранный файл слишком большой (%{big_file_size}). Допустимый размер файла %{norm_file_size}"
+            file_big_size_short: "Выбранный файл превышает допустимый размер (%{norm_file_size}) !"
+            video_and_flash_unsupported_html: "К сожалению, ваш браузер не поддерживает технологии воспроизведения для этого видео. Попробуйте использовать другой браузер, как <a href='%{chrome_link}'>Chrome</a> или загрузите последнюю версию <a href='%{adobe_link}'>Adobe Flash Player</a>."
+            bd_errors: "Ошибка базы данных"
+          insert:
+            link_title: "Видео"
+            select: "Выбрать"
+            append_to_wym: "Вставить видео"
+            cancel_dialog: "Закрыть диалог"
+            videos_list_title: "Список видео"
+            params_title: "Параметры вставки"
+            preview_title: "Просмотр видео"
+          video_to_html:
+            label_name: "Видео"
+            default_name: "Видео не выбрано"
+            label_width: "Ширина"
+            default_width: "Ширина в px"
+            label_height: "Высота"
+            default_height: "Высота в px"
+            page_not_found: "Неверный запрос"
+            video_not_found: "Видео не найдено"
+            video_not_selected: "Видео не выбрано"
+  activerecord:
+    attributes:
+      'refinery/videos/video':
+        title: "Название видео"
+        file: "Видео файл"
+        file_name: "Имя файла"
+        file_size: "Размер файла"
+        file_ext: "Расширение файла"

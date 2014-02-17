@@ -1,0 +1,11 @@
+.video-js{
+  background-color: black;
+  color: #ffffff;
+  border: 1px solid gray;
+  p{margin-top: 50px;padding: 0 10px;font-size: inherit;z-index: 100;position: relative;}
+  .vjs-big-play-button{
+    top: 32%;
+    left: 32%;
+  }
+  video{position: relative;}
+}

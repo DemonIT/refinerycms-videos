@@ -1,0 +1,19 @@
+// Place all the behaviors and hooks related to the matching controller here.
+// All this logic will automatically be available in application.js.
+
+
+if (WYMeditor) {
+    wymeditor_boot_options.toolsItems.push({'name': 'AddVideo', 'title': 'Add_Video', 'css': 'wym_tools_video'});
+
+    // location
+    <% I18n.available_locales.each do |locale_name| %>
+        if (WYMeditor.STRINGS['<%= locale_name %>']) WYMeditor.STRINGS['<%= locale_name %>']['Add_Video'] = '<%= I18n.t 'link_title', :scope => 'refinery.videos.admin.videos.insert', :locale => locale_name %>';
+    <% end %>
+
+    $(document).ready(function() {
+                $('li.wym_tools_video').unbind().find('a').unbind().attr('href', '<%= Refinery::Core::Engine.routes.url_helpers.videos_admin_videos_insert_path(dialog: true, height: '600') %>');
+                init_modal_dialogs();
+            }
+    )
+
+}

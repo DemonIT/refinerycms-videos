@@ -1,0 +1,43 @@
+<%= render 'form_flash_errors' %>
+
+<%= form_for @video, :url => refinery.videos_admin_videos_path,
+             :html => { :multipart => true, :method => 'post'},
+             :as => 'video' do |f| %>
+
+    <%= render '/refinery/admin/error_messages',
+               :object => @video,
+               :include_object_name => false %>
+
+
+    <div class="field">
+      <%= f.label :title %>
+      <%= f.text_field :title, :placeholder => t('title', scope: 'activerecord.attributes.refinery/videos/video'), :class => 'widest', :require => 'require' %>
+    </div>
+
+    <% if @video.new_record? %>
+        <div class="field">
+          <%= f.label :file %>
+          <%= f.file_field :file, accept: @file_content_types.join(','), filesizelimit: @file_size_limit, require: 'required' %>
+          <%= f.label :filed, t('.maximum_file_size', :bytes => number_to_human_size(Refinery::Videos.max_file_size)) %>
+          <%= t('.file_tip', :type_files => Refinery::Videos.whitelisted_mime_types.map{|ftype| "*.#{ftype.split('/').last}"}.uniq.join(', ')) %>
+        </div>
+    <% end %>
+
+
+    <%= render '/refinery/admin/form_actions', :f => f,
+               :continue_editing => false,
+               :hide_cancel => from_dialog?,
+               :cancel_url => refinery.videos_admin_videos_path,
+               :submit_button_text => t('.add_file') %>
+
+
+<% end %>
+
+<% content_for :javascripts do -%>
+    <script>
+        $(document).ready(function(){
+            page_options.init(false, '', '');
+            bindMediaFormSubmit('audio');
+        });
+    </script>
+<% end -%>
