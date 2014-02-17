@@ -6,16 +6,16 @@
 Refinery CMS version 2.1.0 или выше
 
 ## Установка
-Фййл ``Gemfile`` должен содержать строку:
+Файл ``Gemfile`` должен содержать строку:
 
 ```ruby
 gem 'refinerycms-videos', git: 'http://github.com/DemonIT/refinerycms-videos.git'
 ```
 
-Now, run: 
+После запустите: 
 
     bundle install
 
-Next, to install the video extension run:
+Далее установка необходимых библиотек:
 
     rails generate refinery:videos
