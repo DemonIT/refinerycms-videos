@@ -11,7 +11,7 @@ module Refinery
 
     self.max_file_size = 104857600
     self.file_prefix = 'video'
-    self.whitelisted_mime_types = %w(video/mp4 application/ogg video/webm video/ogg video/ogv)
+    self.whitelisted_mime_types = %w(video/mp4)
     self.pages_per_admin_index = 10
     self.pages_per_dialog = 7
     self.video_default_width = 375

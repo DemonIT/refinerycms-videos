@@ -8,7 +8,7 @@ $video_webm_image: url("/assets/refinery/admin/webm.gif");
 $video_mp4_image: url("/assets/refinery/admin/video-mp4.png");
 
 .video_mp4, .video_ogg, .video_webm, .video_ogv{
-    background: {position: left; size: auto 20px; repeat: no-repeat }
+    background: {position: left; size: contain; repeat: no-repeat }
     padding-left: 30px !important;
 }
 .video_mp4{background-image: $video_mp4_image !important;}
@@ -101,4 +101,8 @@ li.wym_tools_video{
 
 .divAlert{
   border: 1px solid red;padding: 3px;font-weight: bold;
+}
+
+.select_image img{
+  margin: 8px 5px;
 }
