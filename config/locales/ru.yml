@@ -11,15 +11,15 @@ ru:
         videos:
           actions:
             create_new: "Загрузить новый видео файл"
-            reorder: "Reorder Audios"
-            reorder_done: "Done Reordering Audios"
-          list_files:
-            no_items_yet: "Здесь пока нет видео файлов."
-          videos:
+            reorder: "Сортировать"
+            reorder_done: "Закончить сортировку"
+          video:
             download: "Скачать файл (%{size})"
             delete: "Удалить этот файл навсегда"
             message: "Вы уверены, что хотите безвовратно удалить '%{file_name}'?"
             edit: "Просмотр видео и редактирование свойств"
+          records:
+            no_items_yet: "Здесь пока нет видео файлов."
           download:
             search_of_null: "Видео файл не найден"
           form:

@@ -17,7 +17,6 @@ function inputFileIsBig(input_id){
 }
 
 function bindMediaFormSubmit(mediaID){
-
     $('#'+mediaID +'_file').bind('change', function(){
         $('#upload_file_is_null').hide();
         $('#'+this.id).removeClass('divAlert');
@@ -27,12 +26,12 @@ function bindMediaFormSubmit(mediaID){
         }
     }) ;
     $('#new_'+mediaID +'').bind('submit', function(){
-        if(this.audio_file.files.length == 0){
+        if(this.elements[mediaID+'_file'].files.length == 0){
             showErrorFlash('upload_file_is_null');
             alertDiv(''+mediaID +'_file');
             $('.save-loader').hide();
             return false;
-        } else if(this.audio_file.files[0].size > $('#'+mediaID +'_file').attr('filesizelimit')){
+        } else if(this.elements[mediaID+'_file'].files[0].size > $('#'+mediaID +'_file').attr('filesizelimit')){
             inputFileIsBig(this.id);
             $('.save-loader').hide();
             return false;
