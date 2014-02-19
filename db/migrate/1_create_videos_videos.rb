@@ -12,6 +12,7 @@ class CreateVideosVideos < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :refinery_videos, :id
 
   end
 

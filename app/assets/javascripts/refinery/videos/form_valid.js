@@ -26,17 +26,22 @@ function bindMediaFormSubmit(mediaID){
         }
     }) ;
     $('#new_'+mediaID +'').bind('submit', function(){
-        if(this.elements[mediaID+'_file'].files.length == 0){
-            showErrorFlash('upload_file_is_null');
-            alertDiv(''+mediaID +'_file');
-            $('.save-loader').hide();
-            return false;
-        } else if(this.elements[mediaID+'_file'].files[0].size > $('#'+mediaID +'_file').attr('filesizelimit')){
-            inputFileIsBig(this.id);
-            $('.save-loader').hide();
-            return false;
-        } else return true
-
+        error_valid_result = 0;
+        $.each($(this).find('input[type=file]'), function(i, input_obj){
+            if(input_obj.attributes['require'] != undefined){
+                if (input_obj.files.length == 0) {
+                    showErrorFlash('upload_file_is_null');
+                    alertDiv(''+mediaID +'_file');
+                    $('.save-loader').hide();
+                    error_valid_result = 1;
+                } else if(this.elements[mediaID+'_file'].files[0].size > $('#'+mediaID +'_file').attr('filesizelimit')){
+                    inputFileIsBig(this.id);
+                    $('.save-loader').hide();
+                    error_valid_result = 1;
+                }
+            }
+        });
+        if (error_valid_result > 0) return false; else return true;
     })
 
 }

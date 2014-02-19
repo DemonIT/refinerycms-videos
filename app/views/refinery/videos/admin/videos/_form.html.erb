@@ -1,38 +1,84 @@
 <%= render 'form_flash_errors' %>
+<% # default files params
 
-<%= form_for @video, :url => refinery.videos_admin_videos_path,
-             :html => { :multipart => true, :method => 'post'},
-             :as => 'video' do |f| %>
+   video_file_content_types = Refinery::Videos.whitelisted_mime_types.to_a
+   video_file_size_limit = Refinery::Videos.max_file_size.to_i
+   poster_file_content_types = Refinery::Videos.poster_mime_types.to_a
+   poster_file_size_limit = Refinery::Videos.poster_max_file_limit.to_i
+%>
+<div <%= "class = edit_video " unless @video.new_record? %> id="full_form_video">
+  <% if @video.new_record? %>
+      <div id="video_preview" class="video_preview" style="display: none;">
+        <video id='new_video_preview' class='video-js vjs-default-skin' controls="controls"/>
+      </div>
+  <% else %>
+      <div class="video_preview">
+        <%= render 'show_video', :video => @video %>
+      </div>
+  <% end %>
+  <div class="video_form">
 
     <%= render '/refinery/admin/error_messages',
                :object => @video,
-               :include_object_name => false %>
+               :include_object_name => true %>
 
+    <%= form_for @video, :url => @video.new_record? ? refinery.videos_admin_videos_path : refinery.videos_admin_video_path,
+                 :html => { :multipart => true, :method => @video.new_record? ? 'post' : 'put'},
+                 :as => 'video' do |f| %>
 
-    <div class="field">
-      <%= f.label :title %>
-      <%= f.text_field :title, :placeholder => t('title', scope: 'activerecord.attributes.refinery/videos/video'), :class => 'widest', :require => 'require' %>
-    </div>
+        <div class="form_fields">
+          <div class="field">
+            <%= f.label :title %>
+            <%= f.text_field :title, :placeholder => t('title', scope: 'activerecord.attributes.refinery/videos/video'), :class => 'widest', :require => 'require', :autofocus => 'autofocus' %>
+          </div>
 
-    <% if @video.new_record? %>
-        <div class="field">
-          <%= f.label :file %>
-          <%= f.file_field :file, accept: @file_content_types.join(','), filesizelimit: @file_size_limit, require: 'required' %>
-          <%= f.label :filed, t('.maximum_file_size', :bytes => number_to_human_size(Refinery::Videos.max_file_size)) %>
-          <%= t('.file_tip', :type_files => Refinery::Videos.whitelisted_mime_types.map{|ftype| "*.#{ftype.split('/').last}"}.uniq.join(', ')) %>
+          <% if @video.new_record? %>
+              <div class="field">
+                <%= f.label :file %>
+                <%= f.file_field :file, accept: video_file_content_types.join(','), filesizelimit: video_file_size_limit, require: 'required' %>
+                <%= f.label :filed, t('.maximum_file_size', :bytes => number_to_human_size(video_file_size_limit) ) %>
+                <%= t('.file_tip', :type_files => video_file_content_types.map{|ftype| "*.#{ftype.split('/').last}"}.uniq.join(', ')) %>
+              </div>
+          <% end %>
+
+          <% unless @video.poster_img.blank? %>
+            <div id="div_video_poster" class='field' >
+              <%= f.label :poster_file %>
+              <%= image_tag(@video.poster_url) %>
+              <div id="link_edit_poster"><%= t '.edit_poster' %></div>
+            </div>
+          <% end %>
+          <div class='field' id="poster_field_file" <%= "style=display:none" unless @video.poster_img.blank? %>>
+            <%= f.label :poster_file %>
+            <%= f.file_field :poster_file, accept: poster_file_content_types.join(','), filesizelimit: poster_file_size_limit %>
+            <%= f.label :filed, t('.maximum_file_size', :bytes => number_to_human_size(poster_file_size_limit) ) %>
+            <%= t('.file_tip', :type_files => poster_file_content_types.map{|ftype| "*.#{ftype.split('/').last}"}.uniq.join(', ')) %>
+            <% unless @video.poster_img.blank? %><div id="cancel_edit_poster"><%= t '.cancel_edit_poster' %></div><% end %>
+          </div>
         </div>
+        <%= render '/refinery/admin/form_actions', :f => f,
+                   :continue_editing => false,
+                   :hide_cancel => from_dialog?,
+                   :hide_delete => @video.new_record?,
+                   :delete_confirmation => t('.delete_confirm', file_name: @video.get_title),
+                   :cancel_url => refinery.videos_admin_videos_path,
+                   :submit_button_text => @video.new_record? ? t('.add_file') : t('.save_file')  %>
+
+
     <% end %>
 
 
-    <%= render '/refinery/admin/form_actions', :f => f,
-               :continue_editing => false,
-               :hide_cancel => from_dialog?,
-               :cancel_url => refinery.videos_admin_videos_path,
-               :submit_button_text => t('.add_file') %>
+  </div>
+</div>
 
-
-<% end %>
-
-    <script>
-        bindMediaFormSubmit('video');
-    </script>
+<script>
+    bindMediaFormSubmit('video');
+    $('#link_edit_poster').bind('click', function(){
+        $('#poster_field_file').show();
+        $('#link_edit_poster').hide();
+    }) ;
+    $('#cancel_edit_poster').bind('click', function(){
+        $('#poster_field_file').hide().find('input[type=file]').val('');
+        $('#link_edit_poster').show();
+    })
+</script>

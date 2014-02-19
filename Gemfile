@@ -2,6 +2,7 @@ source "http://rubygems.org"
 
 gemspec
 
+gem 'rails', '~> 3.2.15'
 gem 'refinerycms', '~> 2.1.0'
 
 # Database Configuration

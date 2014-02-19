@@ -26,12 +26,6 @@ module Refinery
           end
         end
 
-        def new
-          @video = Video.new
-          @file_content_types = Refinery::Videos.whitelisted_mime_types
-          @file_size_limit = Refinery::Videos.max_file_size.to_i
-        end
-
         def edit
           @video_id = params[:id].to_i
           @video_base = Video.find(@video_id)
@@ -41,68 +35,34 @@ module Refinery
         end
 
         def create
-          @message_error = ''
-          if request.post?
-            file_url_path = ''
-            begin
-              directory_path = Refinery::Videos.datastore_root_path
-              file_prefix = Refinery::Videos.file_prefix
-              param_upload_file = params[:video][:file]
-              if param_upload_file
-                file_data = param_upload_file.read
-                # все допустимые типы файлов для данного раздела
-                file_content_types = Refinery::Videos.whitelisted_mime_types
-                file_content_type = file_content_types.find_all{|cntp| cntp.to_s == param_upload_file.content_type.chomp.to_s}
-                if file_content_type.any?
-                  # тип загружаемого файла
-                  file_content_type = file_content_type.first
-                  if file_data.length.to_i > Refinery::Videos.max_file_size.to_i
-                    @message_error = t 'file_big_size', :scope => 'refinery.videos.admin.videos.upload', :big_file_size => number_to_human_size(file_data.length), :norm_file_size => number_to_human_size(Refinery::Videos.max_file_size)
-                  else
-                    # все проверки пройдены - пишем файла
-                    file_type = param_upload_file.original_filename.split('.').last
-                    Video.transaction do
-                      # дополнительные приготовления и задание оригинального имени по назанчению файла
-                      @original_file_name = param_upload_file.original_filename.to_s
-                      #this_data_file_id = Video.get_sequence_id.to_i if this_data_file_id.to_i == 0
-                      new_data_file = Video.new(:file_name => @original_file_name,:title => params[:video][:title].to_s, :file_mime_type => file_content_type, :file_size => file_data.length.to_i)
-                      this_data_file_id = new_data_file.object_id
-                      file_url_name = "#{file_prefix}_#{current_time_text}_#{this_data_file_id}.#{file_type}"
-                      file_url_path = "#{directory_path}/#{file_url_name}"
-                      new_data_file.file_url_name = file_url_name
-                      if new_data_file.save
-                        FileUtils.mkdir_p(directory_path) unless File.exists?(directory_path)
-                        File.open(file_url_path, 'wb'){|f| f.write(file_data)}
-
-                        flash[:notice] = t 'successfully_finish', scope: 'refinery.videos.admin.videos.upload', file_title: new_data_file.get_title
-                      else
-                        @message_error = t 'bd_errors', scope: 'refinery.videos.admin.videos.errors'
-                      end
-                    end
-                  end
-                else
-                  @message_error = t('file_type_uncorrect', scope: 'refinery.videos.admin.videos.errors')
-                  #@message_error += " || #{param_upload_file.content_type.chomp.to_s}" if Rails.env.to_s == 'development'
-                end
+          begin
+            Video.transaction do
+              @video = Video.new(title: params[:video][:title].to_s)
+              @video.file = params[:video][:file]
+              @video.poster_file = params[:video][:poster_file]
+              if @video.save
+                flash[:notice] = t 'successfully_finish', scope: 'refinery.videos.admin.videos.upload', file_title: @video.get_title
+                redirect_to_index
               else
-                @message_error = t('file_is_null', scope: 'refinery.videos.admin.videos.errors')
+                flash[:error] = @message_error.to_s
+                redirect_to refinery.new_videos_admin_video_path and return
               end
-            rescue => exp
-              File.delete file_url_path if File.exists? file_url_path unless file_url_path.blank?
-              #ignored
-              raise exp
             end
-          end
-          @dialog_successful = from_dialog?
-          unless @message_error.blank?
-            flash[:error] = @message_error.to_s
-            self.new # important for dialogs
-            render :action => :new
-          else
-            redirect_to_index
+          rescue => exp
+            begin
+              file_url_path = "#{ Refinery::Videos.datastore_root_path}/#{@video.file_url_name}"
+              File.delete file_url_path if File.exists? file_url_path unless file_url_path.blank?
+              unless params[:video][:poster_file].nil?
+                old_poster_path = "#{Refinery::Videos.poster_datastore_root_path}/#{@video.old_poster_img}"
+                File.delete old_poster_path if File.exists? old_poster_path unless old_poster_path.blank?
+              end
+            rescue
+              puts "Fails System Fail: Video Files don't delete"
+            end
+            #ignored
+            raise exp
           end
         end
-
 
         def insert
           searching? ? search_all_videos : find_all_videos
@@ -135,13 +95,17 @@ module Refinery
         def update
           video_id = params[:id].to_i
           Video.transaction do
-            video_title = params[:video][:title].to_s
-            @video = Video.update(video_id, {title: video_title})
-            if @video.valid?
+            @video = Video.find(video_id)
+            @video.title = params[:video][:title].to_s
+            if params[:video][:poster_file]
+              @video.old_poster_img = @video.poster_img
+              @video.poster_file = params[:video][:poster_file]
+            end
+            if @video.save
               flash[:notice] = t 'successfully_finish', scope: 'refinery.videos.admin.videos.update', file_title: @video.get_title
               redirect_to_index
             else
-              render :action => :edit
+              render :edit
             end
           end
         end
@@ -150,13 +114,16 @@ module Refinery
         def destroy
           video_id = params[:id].to_i
           video = Video.find(video_id)
-          directory_path = Refinery::Videos.datastore_root_path
           Video.transaction do
             video_title = video.get_title
             #Video.destroy
             if video.destroy
-              file_url_path = "#{directory_path}/#{video.file_url_name}"
+              file_url_path = "#{Refinery::Videos.datastore_root_path}/#{video.file_url_name}"
               File.delete file_url_path if File.exist? file_url_path unless video.file_url_name.blank?
+              unless video.poster_img.blank?
+                poster_file_url_path = "#{Refinery::Videos.poster_datastore_root_path}/#{video.poster_img}"
+                File.delete poster_file_url_path if File.exist? poster_file_url_path
+              end
               flash[:notice] = t 'successfully_finish', scope: 'refinery.videos.admin.videos.destroy', file_title: video_title
               if from_dialog?
                 @dialog_successful = true
@@ -189,12 +156,6 @@ module Refinery
           @videos = @videos.paginate(:page => params[:page], :per_page => paginate_per_page)
         end
 
-        def current_time_text
-          current_time = Time.now
-          #"#{current_time.year}-#{current_time.month}-#{current_time.day}_#{current_time.hour}-#{current_time.min}"
-          "#{current_time.year}#{current_time.month}#{current_time.day}#{current_time.hour}#{current_time.min}"
-        end
-
         def exception_work(exp)
           puts "Error: #{exp.class} - '#{exp.message}'"
           if exp.class == ActiveRecord::RecordNotFound
@@ -223,7 +184,7 @@ module Refinery
         end
 
         def exception_file_not_found(file_name)
-          raise EOFError, "RefineryVideoFile not found: #{file_url_path}"
+          raise EOFError, "RefineryVideoFile not found: #{file_name}"
         end
 
 

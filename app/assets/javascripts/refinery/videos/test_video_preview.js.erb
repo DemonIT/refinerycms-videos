@@ -1,0 +1,59 @@
+/**
+ * Created by demon on 19.02.14.
+ */
+
+<% if false %>
+// Check for the various File API support.
+if (window.File && window.FileReader && window.FileList && window.Blob && 3 > 5) {
+    var preview_video = null;
+    $('#video_file').bind('change', function(){
+        if(this.files.length > 0) updatePreviewAttr('src', this.files[0])
+    }) ;
+    $('#video_poster_img').bind('change', function(){
+        if(this.files.length > 0){
+            var file = this.files[0];
+            // Only process image files.
+            if (file.type.match('image.*')) {
+                updatePreviewAttr('poster', file)
+            } else alert("<%= t 'mime_type_img_bad', :scope => 'refinery.videos.admin.videos.errors' %>");
+        }
+    })
+
+
+    function fullFormShowPreview(){
+        $('#full_form_video').addClass('edit_video');
+        $('#video_preview').show();
+    }
+
+
+    function updatePreviewAttr(attr_name, file){
+
+        var reader = new FileReader();
+
+        // Closure to capture the file information.
+        reader.onload = (function(theFile) {
+            return function(e) {
+                // Render thumbnail.
+                if(preview_video != null) {
+                    $('#video_preview .vjs-loading-spinner').show();
+                    preview_video.pause();
+                    $('#video_preview video').attr(attr_name, e.target.result);
+                    $('.vjs-big-play-button').show();
+                    if(preview_video.load()) $('#video_preview .vjs-loading-spinner').hide();
+                } else {
+                    $('#video_preview video').attr(attr_name, e.target.result);
+                    preview_video=videojs('new_video_preview');
+                }
+                fullFormShowPreview();
+            };
+        })(file);
+        // Read in the image file as a data URL.
+        reader.readAsDataURL(file);
+    } ;
+
+    $('video').bind('play', function(){
+        $('.vjs-big-play-button').hide();
+    });
+
+}
+<% end %>

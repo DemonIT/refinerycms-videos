@@ -26,6 +26,10 @@ ru:
             file_tip: "Для полной совместимости, добавтье файлы следующих форматов: %{type_files}"
             maximum_file_size: "Максимальный размер файла: %{bytes}"
             add_file: "Загрузить видео файл"
+            save_file: "Сохранить видео файл"
+            edit_poster: "Изменить изображение"
+            cancel_edit_poster: "Отмена"
+            delete_confirm: "Вы уверены, что хотите безвовратно удалить '%{file_name}'?"
           upload:
             successfully_finish: "Видео файл %{file_title} успешно загружен"
           update:
@@ -45,6 +49,7 @@ ru:
             file_big_size_short: "Выбранный файл превышает допустимый размер (%{norm_file_size}) !"
             video_and_flash_unsupported_html: "К сожалению, ваш браузер не поддерживает технологии воспроизведения для этого видео. Попробуйте использовать другой браузер, как <a href='%{chrome_link}'>Chrome</a> или загрузите последнюю версию <a href='%{adobe_link}'>Adobe Flash Player</a>."
             bd_errors: "Ошибка базы данных"
+            mime_type_img_bad: "Тип изображения не поддерживается"
           insert:
             link_title: "Видео"
             select: "Выбрать"
@@ -71,3 +76,11 @@ ru:
         file_name: "Имя файла"
         file_size: "Размер файла"
         file_ext: "Расширение файла"
+        poster_img: "Изображение"
+        poster_file: "Изображение"
+    errors:
+      models:
+        'refinery/videos/video':
+          file_blank: "Вы должны выбрать файл для загрузки"
+          file_big_size: "превышает допустимый размер!"
+          file_type_uncorrect: "Неверный тип файла. Поддерживаются только данные форматы: %{norm_file_mime_types}"

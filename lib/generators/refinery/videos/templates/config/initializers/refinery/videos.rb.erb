@@ -1,5 +1,6 @@
 Refinery::Videos.configure do |config|
-    #Configures the maximum allowed upload size (in bytes) for an video file
+
+    # Configures the maximum allowed upload size (in bytes) for an video file
     #config.max_file_size = <%= Refinery::Videos.max_file_size %>
 
     # Configure how many videos per page should be displayed in the list of images in the admin area
@@ -7,19 +8,29 @@ Refinery::Videos.configure do |config|
     # Configure how many videos per page should be displayed in the list of images in the admin dialog insert area
     #config.pages_per_dialog =  <%= Refinery::Videos.pages_per_dialog %>
 
-    # Configure white-listed mime types for validation
+    # Configure white-listed mime types for validation video
     #config.whitelisted_mime_types = <%= Refinery::Videos.whitelisted_mime_types %>
-
-    <% if false %>
-    # Configure skin. Put css class name to activate skin. For YouTube like skin put tubecss and add css with images to assets path.
-    # config.skin_css_class = '<%= Refinery::Videos.skin_css_class %>'
-    <% end %>
 
     # Configure default size video tag
     # config.video_default_width = '<%= Refinery::Videos.video_default_width %>'
     # config.video_default_height = '<%= Refinery::Videos.video_default_height %>'
 
+    # Configure path for prefix for video file
+    # config.datastore_path = '<%= Refinery::Videos.file_prefix %>'
+
     # Configure path for video_files in public_path
     # config.datastore_path = '<%= Refinery::Videos.datastore_path %>'
+
+    # Configure prefix for poster file
+    # config.datastore_path = '<%= Refinery::Videos.poster_file_prefix %>'
+
+    # Configure white-listed mime types for validation poster
+    # config.datastore_path = '<%= Refinery::Videos.poster_mime_types %>'
+
+    # Configures the maximum allowed upload size (in bytes) for an poster file
+    # config.datastore_path = '<%= Refinery::Videos.poster_max_file_limit %>'
+
+    # Configure path for video_files in public_path
+    # config.datastore_path = '<%= Refinery::Videos.poster_datastore_path %>'
 
 end
