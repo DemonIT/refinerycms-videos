@@ -7,5 +7,6 @@
     top: 32%;
     left: 32%;
   }
-  video{position: relative;}
+  video{position: relative;width: inherit;height: inherit;}
+  .vjs-poster{width: 100%;height: 100%;}
 }

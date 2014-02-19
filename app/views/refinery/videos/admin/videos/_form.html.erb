@@ -43,18 +43,26 @@
 
           <% unless @video.poster_img.blank? %>
             <div id="div_video_poster" class='field' >
-              <%= f.label :poster_file %>
               <%= image_tag(@video.poster_url) %>
               <div id="link_edit_poster"><%= t '.edit_poster' %></div>
             </div>
+              <div class='field' id="poster_field_file"  style='display:none;'>
+                <div id="file_field">
+                  <div id="cancel_edit_poster" title="<%= t '.cancel_edit_poster' %>"></div>
+                  <%= f.label :poster_file %>
+                  <%= f.file_field :poster_file, accept: poster_file_content_types.join(','), filesizelimit: poster_file_size_limit %>
+                </div>
+                <%= f.label :filed, t('.maximum_file_size', :bytes => number_to_human_size(poster_file_size_limit) ) %>
+                <%= t('.file_tip', :type_files => poster_file_content_types.map{|ftype| "*.#{ftype.split('/').last}"}.uniq.join(', ')) %>
+              </div>
+          <% else %>
+              <div class='field'>
+                <%= f.label :poster_file %>
+                <%= f.file_field :poster_file, accept: poster_file_content_types.join(','), filesizelimit: poster_file_size_limit %>
+                <%= f.label :filed, t('.maximum_file_size', :bytes => number_to_human_size(poster_file_size_limit) ) %>
+                <%= t('.file_tip', :type_files => poster_file_content_types.map{|ftype| "*.#{ftype.split('/').last}"}.uniq.join(', ')) %>
+              </div>
           <% end %>
-          <div class='field' id="poster_field_file" <%= "style=display:none" unless @video.poster_img.blank? %>>
-            <%= f.label :poster_file %>
-            <%= f.file_field :poster_file, accept: poster_file_content_types.join(','), filesizelimit: poster_file_size_limit %>
-            <%= f.label :filed, t('.maximum_file_size', :bytes => number_to_human_size(poster_file_size_limit) ) %>
-            <%= t('.file_tip', :type_files => poster_file_content_types.map{|ftype| "*.#{ftype.split('/').last}"}.uniq.join(', ')) %>
-            <% unless @video.poster_img.blank? %><div id="cancel_edit_poster"><%= t '.cancel_edit_poster' %></div><% end %>
-          </div>
         </div>
         <%= render '/refinery/admin/form_actions', :f => f,
                    :continue_editing => false,

@@ -21,11 +21,29 @@ $video_mp4_image: url("/assets/refinery/admin/video-mp4.png");
     video{width: 100%;}
   }
   .video-js{width: 100% !important;height: 100% !important;}
-  .form_fields{
-    float: left;width: 48%;
+  .form_fields{ border-right: 1px solid gray;padding-right: 10px;
+    float: left;width: 48%;height: 100%;min-height: 300px;
     input{width: 95%;}
   }
   .form-actions{float: right;}
+  #div_video_poster{
+    max-width: 300px;height: 150px; padding: 5px;
+    img{width: auto; height: inherit;max-width: 300px;}
+    margin: 10px;
+  }
+  #link_edit_poster{
+    color: #6495ed;width: 100%;cursor: pointer;text-transform: uppercase; margin: 10px 0;
+    &:hover{font-weight: bold;text-decoration: underline;}
+  }
+  #poster_field_file #file_field{
+    border: 1px solid #22a7f2;padding: 5px;position: relative;width: 400px;
+    #cancel_edit_poster{
+      position: absolute;top: -5px;right: -5px;
+      background: {image: url('close.png');size: contain;position: center;repeat: no-repeat}
+      width: 14px;height: 14px;cursor: pointer;
+    }
+  }
+
 }
 li.wym_tools_video{
   a{background-image: url("film_plus.png");padding-left: 24px !important;}
@@ -56,7 +74,10 @@ li.wym_tools_video{
     #video_name{text-align: center;font-weight: bold;width: 100%;min-height: 20px;}
     #show_video{
       min-height: 250px;
-      .video-js{width: 100% !important;height: 100% !important;min-height: 250px;position: relative;}
+      .video-js{
+        width: 100% !important;height: 100% !important;min-height: 250px;position: relative;
+        .vjs-poster{width: auto;height: 245px;background-size: contain;}
+      }
       video{ width: 100%;height:245px;border: 1px solid transparent;background-color: transparent;}
     }
     .insert_params{
