@@ -35,5 +35,5 @@ gem 'refinerycms', '~> 2.1.0'
 group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
-  gem 'uglifier'
+  #gem 'uglifier'
 end
