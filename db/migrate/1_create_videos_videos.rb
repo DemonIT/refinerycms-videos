@@ -9,6 +9,7 @@ class CreateVideosVideos < ActiveRecord::Migration
       t.string :title
       t.text :description
       t.integer :position
+      t.text :poster_img
 
       t.timestamps
     end
