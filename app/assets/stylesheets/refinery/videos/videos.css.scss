@@ -95,6 +95,10 @@ li.wym_tools_video{
     text-transform: uppercase;
   }
 //  overflow-y: hidden;
+  .videoMinSize{
+    margin-top: 5px;
+    .title{font-weight: bold;margin-right: 10px;}
+  }
 }
 .show_video{
   border: 1px solid gray;

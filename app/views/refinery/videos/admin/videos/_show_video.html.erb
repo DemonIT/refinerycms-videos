@@ -1,7 +1,9 @@
 <% # default configure
    video ||= nil
-   video_width ||= 0
-   video_height ||= 0
+   view_min_width = Refinery::Videos.view_min_width.to_i
+   view_min_height = Refinery::Videos.view_min_height.to_i
+   video_width = (video_width.to_i < view_min_width) ? view_min_width : video_width.to_i
+   video_height = (video_height.to_i < view_min_height) ? view_min_width : video_height.to_i
    include_javascript ||= false
 %>
 <% if video %>

@@ -58,6 +58,8 @@ ru:
             videos_list_title: "Список видео"
             params_title: "Параметры вставки"
             preview_title: "Просмотр видео"
+            view_min_width: "Минимальная ширина"
+            view_min_height: "Минимальная высота"
           video_to_html:
             label_name: "Видео"
             default_name: "Видео не выбрано"
