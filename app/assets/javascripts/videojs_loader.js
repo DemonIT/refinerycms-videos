@@ -10,10 +10,6 @@ $(document).ready(function(){
         })
     }
 
-    if ( $('.video-js > object').length > 0 ){
-        $('.vjs-big-play-button').hide();
-        $('.vjs-control-bar').show();
-    }
     $.each($('.vjs-big-play-button'), function(i, obj){
 
         var obj_parent = $(obj).parents('.video-js')[0];
@@ -42,5 +38,5 @@ function centerVJSBigPlayButton(){
 }
 
 window.onload = function(){
-//    centerVJSBigPlayButton() ;
+    centerVJSBigPlayButton();
 }

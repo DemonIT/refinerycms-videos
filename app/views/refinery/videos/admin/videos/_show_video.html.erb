@@ -6,15 +6,9 @@
    video_height = (video_height.to_i < view_min_height) ? view_min_width : video_height.to_i
    include_javascript ||= false
 %>
+<%= javascript_include_tag 'video', 'videojs_loader' if include_javascript  %>
 <% if video %>
-    <!--video tag began-->
-      <%= javascript_include_tag 'video', 'videojs_loader' if include_javascript  %>
-      <video id="show_video_<%= video.id %>" class="video-js vjs-default-skin" controls="controls" preload="true"
-             <%= "poster=#{video.poster_url}" unless video.poster_img.blank? %>
-             <%= "width=#{video_width}" if video_width > 0 %> <%= "height=#{video_height}" if video_height > 0 %> data-setup="{}" >
-        <source src="<%= video.download_url %>" type='<%= video.file_mime_type %>' />
-      </video>
-    <!--video tag ended-->
+<video id="show_video_<%= video.id %>" class="video-js vjs-default-skin" controls="controls" preload="true"  <%= "poster=#{video.poster_url}" unless video.poster_img.blank? %> <%= "width=#{video_width}" if video_width > 0 %> <%= "height=#{video_height}" if video_height > 0 %> data-setup="{}" > <source src="<%= video.download_url %>" type='<%= video.file_mime_type %>' /></video>
 <% else %>
     <%= render 'video_not_found' %>
 <% end %>

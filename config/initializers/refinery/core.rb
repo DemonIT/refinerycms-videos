@@ -27,6 +27,5 @@ Refinery::Core.configure do |config|
 
   #Register extra stylesheet for backend (optional options)
   config.register_stylesheet 'refinery/videos/videos'
-  config.register_stylesheet 'video-js'
-  config.register_stylesheet 'video_skin'
+  config.register_stylesheet 'refinery-videos'
 end
