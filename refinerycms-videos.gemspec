@@ -3,7 +3,7 @@
 Gem::Specification.new do |s|
   s.platform          = Gem::Platform::RUBY
   s.name              = 'refinerycms-videos'
-  s.version           = '1.0.5rc'
+  s.version           = '1.0.6'
   s.authors           = ['Ulyanov Dmitry']
   s.email             = ['demon@pglu.pro']
   s.description       = 'Manage videos in RefineryCMS. Use HTML5 Video.js player.'

@@ -4,7 +4,6 @@
 
 
 $(document).ready(function(){
-
     if ( (window!=window.top) && ($('.video-js').length > 0) ) {
         parent.$('.ui-dialog').find('button[title=close]').bind('click', function(){
             parent.$('iframe.ui-dialog-content').remove();
@@ -14,8 +13,6 @@ $(document).ready(function(){
     if ( $('.video-js > object').length > 0 ){
         $('.vjs-big-play-button').hide();
         $('.vjs-control-bar').show();
-
-
     }
     $.each($('.vjs-big-play-button'), function(i, obj){
 
@@ -33,7 +30,6 @@ $(document).ready(function(){
 
 function centerVJSBigPlayButton(){
     $.each($('.vjs-big-play-button'), function(i, obj){
-
         var obj_parent = $(obj).parents('.video-js')[0];
         if (obj_parent != undefined) {
             var MyHeight = obj_parent.offsetHeight/2 - (obj.offsetHeight)/2;
@@ -46,5 +42,5 @@ function centerVJSBigPlayButton(){
 }
 
 window.onload = function(){
-    centerVJSBigPlayButton() ;
+//    centerVJSBigPlayButton() ;
 }

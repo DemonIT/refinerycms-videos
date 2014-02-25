@@ -16,11 +16,9 @@ module Refinery
     end
 
     def generate_videojs_loader
-      template "assets/javascripts/videojs_loader.js", File.join(destination_root, "app", "assets", "javascripts", "videojs_loader.js")
       template "assets/javascripts/video.js", File.join(destination_root, "app", "assets", "javascripts", "video.js")
     end
     def generate_video_css
-      template "assets/stylesheets/video_skin.css.scss", File.join(destination_root, "app", "assets", "stylesheets", "video_skin.css.scss")
       template "assets/stylesheets/video-js.css", File.join(destination_root, "app", "assets", "stylesheets", "video-js.css")
     end
     def generate_video_public

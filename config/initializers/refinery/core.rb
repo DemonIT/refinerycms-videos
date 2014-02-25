@@ -22,9 +22,8 @@ Refinery::Core.configure do |config|
 
   # Register extra javascript for backend
   config.register_javascript 'refinery/videos/wymeditor_add_video'
-  config.register_javascript 'video'
-  config.register_javascript 'videojs_loader'
   config.register_javascript 'refinery/videos/form_valid'
+  config.register_javascript 'refinery-videos'
 
   #Register extra stylesheet for backend (optional options)
   config.register_stylesheet 'refinery/videos/videos'
